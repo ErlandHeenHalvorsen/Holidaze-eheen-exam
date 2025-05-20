@@ -1,6 +1,16 @@
 import { useState } from "react";
 import { useAuthStore } from "../../stores/useAuthStore";
 
+// Utility to validate URLs
+const isValidUrl = (url) => {
+    try {
+        new URL(url);
+        return true;
+    } catch {
+        return false;
+    }
+};
+
 export default function CreateVenueModal({ isOpen, onClose }) {
     if (!isOpen) return null;
 
@@ -10,6 +20,7 @@ export default function CreateVenueModal({ isOpen, onClose }) {
         price: 0,
         maxGuests: 1,
         imageUrl: "",
+        imageAlt: "",
         meta: {
             wifi: false,
             parking: false,
@@ -22,10 +33,10 @@ export default function CreateVenueModal({ isOpen, onClose }) {
             zip: "",
             country: "",
             continent: "",
-            lat: 0,
-            lng: 0,
         },
     });
+
+    const [submitting, setSubmitting] = useState(false);
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -38,10 +49,7 @@ export default function CreateVenueModal({ isOpen, onClose }) {
         } else if (name in formData.location) {
             setFormData((prev) => ({
                 ...prev,
-                location: {
-                    ...prev.location,
-                    [name]: ["lat", "lng"].includes(name) ? Number(value) : value,
-                },
+                location: { ...prev.location, [name]: value },
             }));
         } else {
             setFormData((prev) => ({
@@ -53,38 +61,67 @@ export default function CreateVenueModal({ isOpen, onClose }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setSubmitting(true);
+
         const { accessToken } = useAuthStore.getState();
 
+        // --- Build payload matching the Holidaze API schema ---
         const payload = {
-            name: formData.name,
-            description: formData.description,
-            media: formData.imageUrl
-                ? [{ url: formData.imageUrl, alt: formData.name }]
-                : [],
-            price: formData.price,
-            maxGuests: formData.maxGuests,
+            name: formData.name.trim(),
+            description: formData.description.trim(),
+            price: Number(formData.price),
+            maxGuests: Number(formData.maxGuests),
             meta: formData.meta,
-            location: formData.location,
+            location: {},
         };
 
+        // Add only non-empty location fields
+        Object.entries(formData.location).forEach(([key, val]) => {
+            const cleanVal = val.trim();
+            if (cleanVal) {
+                payload.location[key] = cleanVal;
+            }
+        });
+
+        // Add media if valid
+        if (
+            isValidUrl(formData.imageUrl.trim()) &&
+            formData.imageAlt.trim()
+        ) {
+            payload.media = [
+                {
+                    url: formData.imageUrl.trim(),
+                    alt: formData.imageAlt.trim(),
+                },
+            ];
+        }
+
+        console.log("Sending payload:", JSON.stringify(payload, null, 2));
+
         try {
-            const res = await fetch("https://api.noroff.dev/api/v1/holidaze/venues", {
+            const res = await fetch("https://v2.api.noroff.dev/holidaze/venues", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${accessToken}`,
+                    'X-Noroff-API-Key': '3d3df9d0-115c-4d7b-b353-6ad17f9cdcd8',
                 },
                 body: JSON.stringify(payload),
             });
 
-            if (!res.ok) throw new Error("Failed to create venue");
+            if (!res.ok) {
+                const err = await res.json().catch(() => ({}));
+                throw new Error(err?.errors?.[0]?.message || "Invalid input");
+            }
 
             const data = await res.json();
             console.log("Venue created:", data);
             onClose();
-        } catch (error) {
-            console.error("Error:", error);
-            alert("Something went wrong.");
+        } catch (err) {
+            console.error("Error:", err);
+            alert(err.message);
+        } finally {
+            setSubmitting(false);
         }
     };
 
@@ -101,13 +138,66 @@ export default function CreateVenueModal({ isOpen, onClose }) {
                 <h2 className="text-2xl font-bold mb-4">Create a New Venue</h2>
 
                 <form className="grid gap-4" onSubmit={handleSubmit}>
-                    <input name="name" value={formData.name} onChange={handleChange} placeholder="Name" className="input" required />
-                    <textarea name="description" value={formData.description} onChange={handleChange} placeholder="Description" className="input" required />
-                    <input name="imageUrl" value={formData.imageUrl} onChange={handleChange} placeholder="Image URL" className="input" />
+                    <input
+                        id="venue-name"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        placeholder="Name *"
+                        className="input"
+                        required
+                    />
+                    <textarea
+                        id="venue-description"
+                        name="description"
+                        value={formData.description}
+                        onChange={handleChange}
+                        placeholder="Description *"
+                        className="input"
+                        required
+                    />
+                    <input
+                        id="venue-image-url"
+                        name="imageUrl"
+                        value={formData.imageUrl}
+                        onChange={handleChange}
+                        placeholder="Image URL (optional)"
+                        className="input"
+                    />
+                    <input
+                        id="venue-image-alt"
+                        name="imageAlt"
+                        value={formData.imageAlt}
+                        onChange={handleChange}
+                        placeholder="Image alt text"
+                        className="input"
+                    />
 
                     <div className="grid grid-cols-2 gap-4">
-                        <input name="price" type="number" value={formData.price} onChange={handleChange} placeholder="Price per night" className="input" required />
-                        <input name="maxGuests" type="number" value={formData.maxGuests} onChange={handleChange} placeholder="Max guests" className="input" required />
+                        <label htmlFor="price">Price</label>
+                        <input
+                            id="venue-price"
+                            name="price"
+                            type="number"
+                            min={0}
+                            value={formData.price}
+                            onChange={handleChange}
+                            placeholder="Price per night *"
+                            className="input"
+                            required
+                        />
+                        <label htmlFor="maxGuest">Max Guests</label>
+                        <input
+                            id="venue-max-guests"
+                            name="maxGuests"
+                            type="number"
+                            min={1}
+                            value={formData.maxGuests}
+                            onChange={handleChange}
+                            placeholder="Max guests *"
+                            className="input"
+                            required
+                        />
                     </div>
 
                     <fieldset>
@@ -130,15 +220,15 @@ export default function CreateVenueModal({ isOpen, onClose }) {
                     <fieldset>
                         <legend className="font-semibold mb-2">Location</legend>
                         <div className="grid grid-cols-2 gap-4">
-                            {["address", "city", "zip", "country", "continent", "lat", "lng"].map((field) => (
+                            {["address", "city", "zip", "country", "continent"].map((field) => (
                                 <input
                                     key={field}
+                                    id={`venue-${field}`}
                                     name={field}
-                                    value={String(formData.location[field])}
+                                    value={formData.location[field]}
                                     onChange={handleChange}
                                     placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
                                     className="input"
-                                    type={["lat", "lng"].includes(field) ? "number" : "text"}
                                 />
                             ))}
                         </div>
@@ -146,9 +236,10 @@ export default function CreateVenueModal({ isOpen, onClose }) {
 
                     <button
                         type="submit"
-                        className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+                        disabled={submitting}
+                        className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
                     >
-                        Create Venue
+                        {submitting ? "Creating..." : "Create Venue"}
                     </button>
                 </form>
             </div>
