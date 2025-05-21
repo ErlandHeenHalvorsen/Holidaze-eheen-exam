@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import BookingForm from "./BookingForm";
 
 const VenueByIdComponent = ({ id }) => {
     const [venue, setVenue] = useState(null);
@@ -63,16 +64,20 @@ const VenueByIdComponent = ({ id }) => {
 
             <div>
                 <h3 className="text-xl font-semibold">Location</h3>
-                <p>{location.address}, {location.zip}</p>
-                <p>{location.city}, {location.country}</p>
-                <p>{location.continent}</p>
-                <p>Coordinates: {location.lat}, {location.lng}</p>
+                {location?.address && <p>{location.address}{location.zip ? `, ${location.zip}` : ""}</p>}
+                {(location?.city || location?.country) && (
+                    <p>
+                        {location.city || "Unknown City"}, {location.country || "Unknown Country"}
+                    </p>
+                )}
+                {location?.continent && <p>{location.continent}</p>}
             </div>
 
             <div className="text-sm text-gray-500">
                 <p>Created: {new Date(created).toLocaleString()}</p>
                 <p>Updated: {new Date(updated).toLocaleString()}</p>
             </div>
+            <BookingForm venueId={id} />
         </div>
     );
 };
