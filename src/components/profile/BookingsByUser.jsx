@@ -63,15 +63,7 @@ export default function BookingsByUser() {
                             key={booking.id}
                             className="bg-white rounded-xl overflow-hidden shadow-md "
                         >
-                            <div className="relative h-48 w-full bg-gray-200">
-                                {booking.venue?.media?.[0]?.url && (
-                                    <img
-                                        src={booking.venue.media[0].url}
-                                        alt={booking.venue.media[0].alt || "Venue image"}
-                                        className="w-full h-full object-cover"
-                                    />
-                                )}
-                            </div>
+
                             <div className="p-4 space-y-1">
                                 <h2 className="text-lg font-semibold text-gray-800 truncate">
                                     {booking.venue?.name || "Unknown Venue"}
