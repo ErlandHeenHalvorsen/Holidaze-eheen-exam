@@ -47,14 +47,15 @@ export default function Login() {
                 data.accessToken
             );
 
-            // Optionally redirect to profile or reload
+
             // window.location.href = "/profile";
 
         } catch (err) {
             setError(err.message);
-            clearAuth(); // Clear any partial state on failure
+            clearAuth();
         } finally {
             setLoading(false);
+            window.location.href = "/";
         }
     };
 
