@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useAuthStore } from "../../stores/useAuthStore";
 
-// Utility to validate URLs
 const isValidUrl = (url) => {
     try {
         new URL(url);
@@ -65,7 +64,6 @@ export default function CreateVenueModal({ isOpen, onClose }) {
 
         const { accessToken } = useAuthStore.getState();
 
-        // --- Build payload matching the Holidaze API schema ---
         const payload = {
             name: formData.name.trim(),
             description: formData.description.trim(),
@@ -75,7 +73,7 @@ export default function CreateVenueModal({ isOpen, onClose }) {
             location: {},
         };
 
-        // Add only non-empty location fields
+
         Object.entries(formData.location).forEach(([key, val]) => {
             const cleanVal = val.trim();
             if (cleanVal) {
@@ -83,7 +81,6 @@ export default function CreateVenueModal({ isOpen, onClose }) {
             }
         });
 
-        // Add media if valid
         if (
             isValidUrl(formData.imageUrl.trim()) &&
             formData.imageAlt.trim()

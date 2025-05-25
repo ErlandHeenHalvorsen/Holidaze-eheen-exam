@@ -6,7 +6,7 @@ const Header = () => {
     const user = useAuthStore((state) => state.user);
     const hydrated = useAuthStore((state) => state.hydrated);
 
-    if (!hydrated) return null; // Avoid rendering until hydration is complete
+    if (!hydrated) return null;
 
     return (
         <header className="bg-white shadow-md sticky top-0 z-50">

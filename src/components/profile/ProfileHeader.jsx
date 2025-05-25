@@ -1,7 +1,7 @@
 import React from "react";
 
 export default function ProfileHeader({ user }) {
-    if (!user) return null; // Prevent crashing if user is undefined
+    if (!user) return null;
 
     const avatarUrl = user.avatar?.url || "";
     const avatarAlt = user.avatar?.alt || "User avatar";

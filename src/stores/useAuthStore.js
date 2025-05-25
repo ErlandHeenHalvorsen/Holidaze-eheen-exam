@@ -17,7 +17,7 @@ export const useAuthStore = create(
       name: "auth-storage",
       getStorage: () => sessionStorage,
       onRehydrateStorage: () => (state) => {
-        state.setHydrated(); // this runs after sessionStorage is loaded
+        state.setHydrated(); 
       },
     }
   )

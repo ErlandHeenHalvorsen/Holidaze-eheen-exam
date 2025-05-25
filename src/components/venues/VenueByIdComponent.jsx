@@ -10,7 +10,7 @@ const VenueByIdComponent = ({ id }) => {
             try {
                 const response = await fetch(`https://v2.api.noroff.dev/holidaze/venues/${id}`);
                 const result = await response.json();
-                setVenue(result.data); // Access nested 'data' object
+                setVenue(result.data);
             } catch (error) {
                 console.error("Error fetching venue:", error);
             } finally {

@@ -9,7 +9,7 @@ export default function ProfilePage() {
     const user = useAuthStore((s) => s.user);
     const clearAuth = useAuthStore((s) => s.clearAuth);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [view, setView] = useState("venues"); // "venues" | "bookings"
+    const [view, setView] = useState("venues");
 
     if (!user) return <p className="text-center mt-10">You must be logged in to view your profile.</p>;
 

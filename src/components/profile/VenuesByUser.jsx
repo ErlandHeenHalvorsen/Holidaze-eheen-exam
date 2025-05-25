@@ -38,9 +38,6 @@ export default function VenuesByUser() {
             if (!response.ok) {
                 throw new Error("Failed to delete venue");
             }
-
-            // Optionally, refresh the venues list after deletion
-            // setVenues(venues.filter((venue) => venue.id !== venueId));
         } catch (error) {
             console.error("Error deleting venue:", error);
         }
@@ -49,7 +46,7 @@ export default function VenuesByUser() {
     return (
         <div className="space-y-6 mt-10">
             <h2 className="text-2xl font-semibold">Your Venues</h2>
-            <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+            <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 ">
                 {venues.map((venue) => {
                     const image = venue.media?.[0]?.url;
                     const alt = venue.media?.[0]?.alt || "Venue image";
@@ -140,8 +137,8 @@ export default function VenuesByUser() {
                                         }
 
                                         setDeletingVenue(null);
-                                        // Optional: trigger refresh or state update
-                                        window.location.reload(); // or refetch logic
+
+                                        window.location.reload();
                                     } catch (err) {
                                         console.error("Delete failed:", err);
                                     }

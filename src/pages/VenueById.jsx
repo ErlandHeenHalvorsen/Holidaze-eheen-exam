@@ -6,7 +6,7 @@ const VenueById = () => {
 
     return (
         <div>
-            <h1>Venue Details</h1>
+
             <VenueByIdComponent id={id} />
         </div>
     );

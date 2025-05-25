@@ -1,4 +1,3 @@
-// hooks/useFetch.js
 import { useState, useEffect } from "react";
 
 const useFetch = (url, options = {}) => {
@@ -36,7 +35,7 @@ const useFetch = (url, options = {}) => {
 
     fetchData();
     return () => controller.abort();
-  }, [url, JSON.stringify(options)]); // Include options in dependency array
+  }, [url, JSON.stringify(options)]); 
 
   return { data, loading, error };
 };

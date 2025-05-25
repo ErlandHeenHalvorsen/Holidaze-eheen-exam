@@ -70,7 +70,7 @@ const EditVenueModal = ({ venue, onClose, onUpdate }) => {
                 throw new Error(errors?.[0]?.message || "Failed to update venue");
             }
 
-            if (onUpdate) onUpdate(); // optional refresh or update callback
+            if (onUpdate) onUpdate();
             onClose();
         } catch (err) {
             setError(err.message);
