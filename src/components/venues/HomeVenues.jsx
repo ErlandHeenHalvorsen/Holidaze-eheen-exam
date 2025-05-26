@@ -42,7 +42,7 @@ const HomeVenuesShowcase = () => {
             </section>
 
             <section className="mt-16">
-                <h2 className="text-2xl font-semibold mb-6 text-center">Hidden Gems (Rating &gt; 3)</h2>
+                <h2 className="text-2xl font-semibold mb-6 text-center">Hidden Gems</h2>
                 <div className="flex flex-wrap justify-center gap-6">
                     {randomGood.map((venue) => (
                         <VenueCard key={venue.id} venue={venue} />
