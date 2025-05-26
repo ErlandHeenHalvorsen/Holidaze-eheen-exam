@@ -1,6 +1,7 @@
 import React from "react";
 import UpdateProfile from "./UpdateProfile";
 
+
 export default function ProfileHeader({ user }) {
     const [modalOpen, setModalOpen] = React.useState(false);
 

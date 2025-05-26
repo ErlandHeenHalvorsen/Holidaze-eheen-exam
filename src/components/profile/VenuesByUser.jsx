@@ -2,6 +2,8 @@ import useFetch from "../../utils/useFetch";
 import { useAuthStore } from "../../stores/useAuthStore";
 import EditVenueModal from "./EditVenue";
 import { useState } from "react";
+import { FaRegCalendarAlt } from "react-icons/fa";
+
 
 export default function VenuesByUser() {
     const user = useAuthStore((s) => s.user);
@@ -59,7 +61,7 @@ export default function VenuesByUser() {
                                     alt={venue.media?.[0]?.alt || "Venue image"}
                                     className="w-full h-48 object-cover"
                                 />
-                                <div className="p-4 space-y-1 pb-16"> {/* Leave space for buttons */}
+                                <div className="p-4 space-y-2 pb-16">
                                     <div className="flex justify-between items-center">
                                         <h2 className="text-lg font-semibold text-gray-800 truncate">{venue.name}</h2>
                                     </div>
@@ -71,6 +73,11 @@ export default function VenuesByUser() {
                                     </p>
                                     <div className="text-yellow-400 text-sm">
                                         {"★".repeat(Math.floor(venue.rating)) + "☆".repeat(5 - Math.floor(venue.rating))}
+                                    </div>
+
+                                    {/* Calendar Icon */}
+                                    <div className="flex items-center gap-2 text-sm text-gray-600 mt-2">
+                                        <FaRegCalendarAlt className="text-xl" />
                                     </div>
                                 </div>
 

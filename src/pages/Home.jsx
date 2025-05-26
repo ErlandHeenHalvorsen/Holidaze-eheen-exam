@@ -1,5 +1,5 @@
 import HomeMain from "../components/home/HomeMain";
-import heroImg from "../assets/heroexam.png";
+import heroImg from "../assets/heroexam-min.png";
 const Home = () => {
     return (
         <div>
