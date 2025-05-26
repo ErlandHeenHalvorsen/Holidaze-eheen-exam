@@ -4,10 +4,10 @@ const Home = () => {
     return (
         <div>
             <section
-                className="bg-cover bg-center h-[80vh] relative"
+                className="bg-cover bg-center h-[80vh] relative mb-8"
                 style={{ backgroundImage: `url(${heroImg})` }}
             >
-                <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center text-white text-center px-4">
+                <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center text-white text-center px-4 ">
                     <h1 className="text-4xl sm:text-6xl font-bold mb-4">Find your next escape</h1>
                     <p className="text-lg sm:text-xl mb-6 max-w-xl">Explore unique venues hosted by real people  wherever you want to go.</p>
                     <div className="flex flex-col sm:flex-row gap-4">
