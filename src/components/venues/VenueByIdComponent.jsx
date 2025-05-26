@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
 import BookingForm from "./BookingForm";
+import VenueCalendar from "../profile/VenueCalendar";
+import { FaRegCalendarAlt } from "react-icons/fa";
 
 const VenueByIdComponent = ({ id }) => {
     const [venue, setVenue] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [showCalendar, setShowCalendar] = useState(false);
 
     useEffect(() => {
         const fetchVenue = async () => {
             try {
-                const response = await fetch(`https://v2.api.noroff.dev/holidaze/venues/${id}`);
+                const response = await fetch(`https://v2.api.noroff.dev/holidaze/venues/${id}?_owner=true&_bookings=true`);
                 const result = await response.json();
                 setVenue(result.data);
             } catch (error) {
@@ -72,12 +75,26 @@ const VenueByIdComponent = ({ id }) => {
                 )}
                 {location?.continent && <p>{location.continent}</p>}
             </div>
+            <div
+                className="flex items-center gap-2 text-sm text-gray-600 mt-4 cursor-pointer hover:text-black w-fit"
+                onClick={() => setShowCalendar(true)}
+            >
+                <FaRegCalendarAlt className="text-xl" />
+                <span>See available dates</span>
+            </div>
 
             <div className="text-sm text-gray-500">
                 <p>Created: {new Date(created).toLocaleString()}</p>
                 <p>Updated: {new Date(updated).toLocaleString()}</p>
             </div>
             <BookingForm venueId={id} />
+            {showCalendar && (
+                <VenueCalendar
+                    venue={venue}
+                    onClose={() => setShowCalendar(false)}
+                />
+            )}
+
         </div>
     );
 };

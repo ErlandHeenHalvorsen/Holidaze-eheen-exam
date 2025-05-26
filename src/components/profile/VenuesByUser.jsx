@@ -3,6 +3,7 @@ import { useAuthStore } from "../../stores/useAuthStore";
 import EditVenueModal from "./EditVenue";
 import { useState } from "react";
 import { FaRegCalendarAlt } from "react-icons/fa";
+import VenueCalendar from "./VenueCalendar";
 
 
 export default function VenuesByUser() {
@@ -10,9 +11,10 @@ export default function VenuesByUser() {
     const accessToken = useAuthStore((s) => s.accessToken);
     const [editingVenue, setEditingVenue] = useState(null);
     const [deletingVenue, setDeletingVenue] = useState(null);
+    const [calendarVenue, setCalendarVenue] = useState(null);
 
     const url = user?.name
-        ? `https://v2.api.noroff.dev/holidaze/profiles/${user.name}/venues`
+        ? `https://v2.api.noroff.dev/holidaze/profiles/${user.name}/venues?_bookings=true`
         : null;
 
     const headers = {
@@ -76,8 +78,12 @@ export default function VenuesByUser() {
                                     </div>
 
                                     {/* Calendar Icon */}
-                                    <div className="flex items-center gap-2 text-sm text-gray-600 mt-2 cursor-pointer">
+                                    <div
+                                        className="flex items-center gap-2 text-sm text-gray-600 mt-2 cursor-pointer"
+                                        onClick={() => setCalendarVenue(venue)}
+                                    >
                                         <FaRegCalendarAlt className="text-xl" />
+                                        <span>See bookings</span>
                                     </div>
                                 </div>
 
@@ -157,6 +163,12 @@ export default function VenuesByUser() {
                         </div>
                     </div>
                 </div>
+            )}
+            {calendarVenue && (
+                <VenueCalendar
+                    venue={calendarVenue}
+                    onClose={() => setCalendarVenue(null)}
+                />
             )}
         </div>
     );
