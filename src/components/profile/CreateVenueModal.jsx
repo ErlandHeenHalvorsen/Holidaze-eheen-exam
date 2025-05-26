@@ -112,7 +112,7 @@ export default function CreateVenueModal({ isOpen, onClose }) {
             }
 
             const data = await res.json();
-            console.log("Venue created:", data);
+            console.log("Venue created:", data, res.status);
             onClose();
         } catch (err) {
             console.error("Error:", err);

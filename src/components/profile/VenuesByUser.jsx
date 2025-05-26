@@ -76,7 +76,7 @@ export default function VenuesByUser() {
                                     </div>
 
                                     {/* Calendar Icon */}
-                                    <div className="flex items-center gap-2 text-sm text-gray-600 mt-2">
+                                    <div className="flex items-center gap-2 text-sm text-gray-600 mt-2 cursor-pointer">
                                         <FaRegCalendarAlt className="text-xl" />
                                     </div>
                                 </div>

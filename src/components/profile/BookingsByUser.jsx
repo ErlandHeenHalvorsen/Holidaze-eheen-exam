@@ -16,7 +16,7 @@ export default function BookingsByUser() {
 
             try {
                 const response = await fetch(
-                    `https://v2.api.noroff.dev/holidaze/profiles/${user.name}/bookings`,
+                    `https://v2.api.noroff.dev/holidaze/profiles/${user.name}/bookings?_venue=true&_customer=true`,
                     {
                         headers: {
                             Authorization: `Bearer ${accessToken}`,
@@ -61,30 +61,44 @@ export default function BookingsByUser() {
                     return (
                         <div
                             key={booking.id}
-                            className="bg-white rounded-xl overflow-hidden shadow-md "
+                            className="bg-white rounded-xl shadow hover:shadow-lg transition-shadow duration-300 overflow-hidden"
                         >
-
-                            <div className="p-4 space-y-1">
-                                <h2 className="text-lg font-semibold text-gray-800 truncate">
-                                    {booking.venue?.name || "Unknown Venue"}
+                            {image && (
+                                <img
+                                    src={image}
+                                    alt={alt}
+                                    className="w-full h-40 object-cover"
+                                />
+                            )}
+                            <div className="p-4 space-y-2">
+                                <h2 className="text-xl font-semibold text-gray-800 truncate">
+                                    {venue?.name || "Unknown Venue"}
                                 </h2>
-                                <p className="text-sm text-gray-600">
-                                    {booking.venue?.location?.city || "Unknown"},{" "}
-                                    {booking.venue?.location?.country || ""}
+                                <p className="text-sm text-gray-600 italic">
+                                    {venue?.location?.city || "Unknown"},{" "}
+                                    {venue?.location?.country || ""}
                                 </p>
-                                <p className="text-sm text-gray-700 font-medium">
-                                    From: {new Date(booking.dateFrom).toLocaleDateString()}
-                                </p>
-                                <p className="text-sm text-gray-700 font-medium">
-                                    To: {new Date(booking.dateTo).toLocaleDateString()}
-                                </p>
-                                <p className="text-sm text-gray-700">
-                                    Guests: {booking.guests}
-                                </p>
+                                <div className="text-sm text-gray-700 space-y-1">
+                                    <p>
+                                        <span className="font-medium">From:</span>{" "}
+                                        {new Date(booking.dateFrom).toLocaleDateString()}
+                                    </p>
+                                    <p>
+                                        <span className="font-medium">To:</span>{" "}
+                                        {new Date(booking.dateTo).toLocaleDateString()}
+                                    </p>
+                                    <p>
+                                        <span className="font-medium">Guests:</span> {booking.guests}
+                                    </p>
+                                </div>
+                                <div className="pt-2 text-sm text-gray-500">
+                                    Booking ID: <span className="text-gray-800">{booking.id}</span>
+                                </div>
                             </div>
                         </div>
                     );
                 })}
+
             </div>
         </div>
     );

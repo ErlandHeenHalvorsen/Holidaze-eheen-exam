@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 
 const useFetch = (url, options = {}) => {
   const [data, setData] = useState(null);
+  const [meta, setMeta] = useState(null); // <-- new
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -24,6 +25,7 @@ const useFetch = (url, options = {}) => {
 
         const result = await response.json();
         setData(result.data);
+        setMeta(result.meta); 
       } catch (err) {
         if (err.name !== "AbortError") {
           setError(err.message);
@@ -35,9 +37,9 @@ const useFetch = (url, options = {}) => {
 
     fetchData();
     return () => controller.abort();
-  }, [url, JSON.stringify(options)]); 
+  }, [url, JSON.stringify(options)]);
 
-  return { data, loading, error };
+  return { data, meta, loading, error }; // <-- return meta too
 };
 
 export default useFetch;
