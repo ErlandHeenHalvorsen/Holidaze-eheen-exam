@@ -16,7 +16,7 @@ export default function ProfileHeader({ user }) {
     return (
         <div className="rounded-xl overflow-hidden shadow-md bg-white">
             {/* Banner */}
-            <div className="relative h-40 w-full bg-gray-200">
+            <div className="relative h-60 w-full bg-gray-200">
                 {bannerUrl && (
                     <img
                         src={bannerUrl}
