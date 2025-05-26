@@ -1,5 +1,5 @@
 import ProfileHeader from "../components/profile/ProfileHeader";
-import ProfilePage from "../components/profile/profilePage";
+import ProfilePage from "../components/profile/ProfilePage";
 const Profile = () => {
     return (
         <div>
