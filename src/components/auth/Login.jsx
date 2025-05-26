@@ -28,6 +28,8 @@ export default function Login() {
 
             if (!res.ok) {
                 throw new Error("Login failed. Please check your credentials.");
+            } else if (res.ok) {
+                window.location.href = "/profile";
             }
 
             const { data } = await res.json();
@@ -55,7 +57,7 @@ export default function Login() {
             clearAuth();
         } finally {
             setLoading(false);
-            window.location.href = "/";
+
         }
     };
 
