@@ -39,6 +39,51 @@ The app will be available at [Netlify](https://holidaze-exam-erlhal.netlify.app/
 
 - `src/` - Main source code
 - `public/` - Static assets
+- `dist/` - Production
+
+## Project Tree
+
+src/
+|-- App.jsx
+|-- Layout.jsx
+|-- assets
+|   `-- heroexam-min.png
+|-- components
+|   |-- auth
+|   |   |-- Login.jsx
+|   |   `-- Register.jsx
+|   |-- header
+|   |   |-- Footer.jsx
+|   |   `-- Header.jsx
+|   |-- home
+|   |   `-- HomeMain.jsx
+|   |-- profile
+|   |   |-- BookingsByUser.jsx
+|   |   |-- CreateVenueModal.jsx
+|   |   |-- EditVenue.jsx
+|   |   |-- ProfileHeader.jsx
+|   |   |-- ProfilePage.jsx
+|   |   |-- UpdateProfile.jsx
+|   |   |-- VenueCalendar.jsx
+|   |   `-- VenuesByUser.jsx
+|   `-- venues
+|       |-- BookingForm.jsx
+|       |-- HomeVenues.jsx
+|       |-- VenueByIdComponent.jsx
+|       |-- VenueCard.jsx
+|       `-- VenuesMain.jsx
+|-- index.css
+|-- main.jsx
+|-- pages
+|   |-- Auth.jsx
+|   |-- Home.jsx
+|   |-- Profile.jsx
+|   |-- VenueById.jsx
+|   `-- Venues.jsx
+|-- stores
+|   `-- useAuthStore.js
+`-- utils
+    `-- useFetch.js
 
 ## Additional Information
 
