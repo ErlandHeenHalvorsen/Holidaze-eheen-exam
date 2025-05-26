@@ -92,7 +92,7 @@ export default function Register() {
     };
 
     return (
-        <div className="max-w-md mx-auto mt-16 bg-white shadow-md p-6 rounded-xl">
+        <div className="max-w-md mx-auto mt-16 bg-white  p-6 rounded-xl">
             <h2 className="text-2xl font-semibold mb-6 text-center">Create an Account</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
                 {/* Username */}
@@ -157,7 +157,7 @@ export default function Register() {
                 </div>
 
                 {/* Avatar */}
-                <fieldset className="border border-gray-200 rounded p-4">
+                <fieldset className=" p-4">
                     <legend className="text-sm font-medium text-gray-700">Avatar (optional)</legend>
                     <div className="mt-2 space-y-2">
                         <div>
@@ -184,7 +184,7 @@ export default function Register() {
                 </fieldset>
 
                 {/* Banner */}
-                <fieldset className="border border-gray-200 rounded p-4">
+                <fieldset className=" p-4">
                     <legend className="text-sm font-medium text-gray-700">Banner (optional)</legend>
                     <div className="mt-2 space-y-2">
                         <div>

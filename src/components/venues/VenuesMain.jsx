@@ -25,7 +25,7 @@ const VenuesMain = () => {
             setError(null);
             try {
                 const res = await fetch(
-                    "https://v2.api.noroff.dev/holidaze/venues?limit=100&page=1&_owner=true&_bookings=true",
+                    "https://v2.api.noroff.dev/holidaze/venues?limit=100&page=1&_owner=true&_bookings=true&sort=created&sortOrder=desc",
                     { signal: controller.signal }
                 );
                 const json = await res.json();
