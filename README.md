@@ -28,7 +28,7 @@ Holidaze, Exam spring 2025, Erland Heen Halvorsen
 
 Start the development server:
 ```bash
-npm start
+npm run dev
 # or
 yarn start
 ```
